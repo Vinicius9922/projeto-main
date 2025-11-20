@@ -1,0 +1,143 @@
+package com.ifsp.projeto;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult; // Importante para validação
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.validation.Valid;
+
+@Controller
+public class CarrinhoController {
+
+    @Autowired
+    private ProdutoRepository repository;
+
+    @Autowired 
+    private CategoriaRepository categoriaRepository;
+    
+    private static String CAMINHO_IMAGENS = "./imagens-upload/";
+
+    // Redireciona a raiz para a lista
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/lista";
+    }
+
+    @GetMapping("/formulario")
+    public String formularioProdutos(Model model) {
+        model.addAttribute("produtos", new Produtos());
+        model.addAttribute("categorias", categoriaRepository.findAll());
+        return "index.html";
+    }
+
+    @GetMapping("/lista")
+    public String mostrarLista(@RequestParam(required = false) String busca, Model model) {
+        if (busca != null && !busca.isEmpty()) {
+            model.addAttribute("produtos", repository.findByNomeContaining(busca));
+        } else {
+            model.addAttribute("produtos", repository.findAll());
+        }
+        return "lista.html";
+    }
+    
+    @GetMapping("/detalhes/{id}")
+    public String verDetalhes(@PathVariable Long id, Model model) {
+        Optional<Produtos> produtoOpt = repository.findById(id);
+        if (produtoOpt.isEmpty()) {
+            return "redirect:/lista";
+        }
+        model.addAttribute("produto", produtoOpt.get());
+        return "detalhes.html";
+    }
+
+    // --- MÉTODO PRINCIPAL COM A VALIDAÇÃO ---
+    @PostMapping("/cadastrar")
+    public String cadastrandoProduto(
+            @Valid Produtos produtos, // 1. O @Valid ativa as checagens (@NotBlank, @Positive, etc.)
+            BindingResult result,     // 2. O result guarda o resultado dessas checagens
+            @RequestParam Long categoriaId,
+            @RequestParam("file") MultipartFile arquivo, 
+            Model model) {
+
+        // 3. Se houver erros (ex: preço negativo, nome vazio)
+        if (result.hasErrors()) {
+            // Precisamos recarregar as categorias, senão o select fica vazio e dá erro
+            model.addAttribute("categorias", categoriaRepository.findAll());
+            // Volta para a página do formulário (index.html) para mostrar os erros
+            return "index.html";
+        }
+
+        // Se passou na validação, continua o fluxo normal...
+        
+        // Associa a categoria
+        Optional<Categoria> catOpt = categoriaRepository.findById(categoriaId);
+        if(catOpt.isPresent()) {
+            produtos.setCategoria(catOpt.get());
+        }
+        
+        // Lógica de Upload de Imagem
+        try {
+            if (!arquivo.isEmpty()) {
+                byte[] bytes = arquivo.getBytes();
+                Path caminho = Paths.get(CAMINHO_IMAGENS + arquivo.getOriginalFilename());
+                Files.write(caminho, bytes);
+                produtos.setImagem(arquivo.getOriginalFilename());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        repository.save(produtos);
+        return "redirect:/lista";
+    }
+
+    @GetMapping("/limpar")
+    public String limparLista() {
+        repository.deleteAll();
+        return "redirect:/lista";
+    }
+
+    @PostMapping("/adicionar")
+    public String adicionarItem(@RequestParam Long id) {
+        Optional<Produtos> produtoOpt = repository.findById(id);
+        if (produtoOpt.isPresent()) {
+            Produtos p = produtoOpt.get();
+            p.setQuantidade(p.getQuantidade() + 1);
+            repository.save(p);
+        }
+        return "redirect:/lista";
+    }
+
+    @PostMapping("/diminuir")
+    public String diminuirItem(@RequestParam Long id) {
+        Optional<Produtos> produtoOpt = repository.findById(id);
+        if (produtoOpt.isPresent()) {
+            Produtos p = produtoOpt.get();
+            int novaQtd = p.getQuantidade() - 1;
+            if (novaQtd <= 0) repository.deleteById(id);
+            else {
+                p.setQuantidade(novaQtd);
+                repository.save(p);
+            }
+        }
+        return "redirect:/lista";
+    }
+    
+    @PostMapping("/remover")
+    public String removerItem(@RequestParam Long id) {  
+        repository.deleteById(id);
+        return "redirect:/lista";
+    }
+}

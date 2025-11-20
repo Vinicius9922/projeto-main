@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loja Virtual</title>
+    <link rel="stylesheet" th:href="@{/lista.css}" />
+</head>
+
+<body>
+    <div class="containerPrincipal">
+        <h1><strong>CONTROLE DE ESTOQUE</strong></h1>
+
+        <div style="text-align: right; margin-bottom: 15px;">
+            <div th:if="${#authentication.name == 'anonymousUser'}">
+                <a th:href="@{/login}" style="color: #3b82f6; font-weight: bold;">Fazer Login</a>
+            </div>
+
+            <div th:if="${#authentication.name != 'anonymousUser'}">
+                <span style="color: #94a3b8;">Olá, <span th:text="${#authentication.name}"></span>!</span>
+                
+                <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}" style="margin-left: 15px;">
+                    <span style="color: #facc15; font-weight: bold;">| Admin: </span>
+                    <a th:href="@{/usuarios}" style="color: #e2e8f0; margin: 0 5px; font-size: 0.9rem;">Usuários</a>
+                    <a th:href="@{/fornecedores}" style="color: #e2e8f0; margin: 0 5px; font-size: 0.9rem;">Fornecedores</a>
+                    <a th:href="@{/categorias}" style="color: #e2e8f0; margin: 0 5px; font-size: 0.9rem;">Categorias</a>
+                </span>
+                <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 10px;">
+                   <button type="submit" style="background: none; border: none; color: #ef4444; cursor: pointer; text-decoration: underline;">Sair</button>
+                </form>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+
+            <a class="botao botaoPrimario" th:href="@{/formulario}">+ Novo Produto</a>
+
+            <form th:action="@{/lista}" method="get" style="display: flex; gap: 5px;">
+                <input type="text" name="busca" placeholder="Buscar produto..."
+                    style="padding: 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white;">
+                <button type="submit" class="botao botaoPrimario">Buscar</button>
+            </form>
+        </div>
+
+        <div th:if="${#lists.isEmpty(produtos)}">
+            <h2 id="mensagemVoid">Nenhum produto encontrado.</h2>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(produtos)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>IMG</th>
+                        <th>NOME</th>
+                        <th>PREÇO</th>
+                        <th>QTD</th>
+                        <th>AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="produto : ${produtos}">
+                        <td>
+                            <img th:if="${produto.imagem != null}" th:src="@{'/imagens-upload/' + ${produto.imagem}}"
+                                style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                            <span th:if="${produto.imagem == null}">Sem ft</span>
+                        </td>
+
+                        <td>
+                            <a th:href="@{/detalhes/{id}(id=${produto.id})}" th:text="${produto.nome}"
+                                style="color: #3b82f6; font-weight: bold; text-decoration: underline;">
+                            </a>
+                            <div style="font-size: 0.8rem; color: #94a3b8;" th:if="${produto.categoria != null}"
+                                th:text="${produto.categoria.nome}">
+                            </div>
+                        </td>
+
+                        <td style="color: #4ade80; font-weight: bold;">
+                            R$ <span th:text="${#numbers.formatDecimal(produto.preco, 1, 2, 'COMMA')}"></span>
+                        </td>
+
+                        <td>
+                            <div id="conteinerBotoes">
+                                <form th:action="@{/adicionar}" th:method="post">
+                                    <input type="hidden" name="id" th:value="${produto.id}" />
+                                    <button type="submit">+</button>
+                                </form>
+
+                                <span th:text="${produto.quantidade}"></span>
+
+                                <form th:action="@{/diminuir}" th:method="post">
+                                    <input type="hidden" name="id" th:value="${produto.id}" />
+                                    <button type="submit">-</button>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <form th:action="@{/remover}" th:method="post">
+                                <input type="hidden" name="id" th:value="${produto.id}" />
+                                <button type="submit" class="botao botaoPerigo">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a th:href="@{/limpar}" class="botao botaoPerigo botaoLimpar">Limpar Tudo</a>
+        </div>
+    </div>
+</body>
+
+</html>

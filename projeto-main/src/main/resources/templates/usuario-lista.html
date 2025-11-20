@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Usuários</title>
+    <link rel="stylesheet" th:href="@{/lista.css}" />
+</head>
+
+<body>
+    <div class="containerPrincipal">
+        <h1>Gerenciamento de Usuários</h1>
+
+        <div style="margin-bottom: 20px;">
+            <a th:href="@{/usuarios/novo}" class="botao botaoPrimario">Novo Usuário</a>
+            <a th:href="@{/lista}" class="botao"
+                style="background-color: #64748b; color: white; margin-left: 10px;">Voltar para Loja</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Papel (Role)</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${listaUsuarios}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.nome}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td>
+                        <span th:if="${user.papel == 'ADMIN'}" style="color: #facc15; font-weight: bold;">ADMIN</span>
+                        <span th:if="${user.papel != 'ADMIN'}" style="color: #94a3b8;">CLIENTE</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/usuarios/editar/{id}(id=${user.id})}" class="botao"
+                            style="background-color: #eab308; color: black; padding: 5px 10px; font-size: 0.8rem;">Editar</a>
+                        <a th:href="@{/usuarios/excluir/{id}(id=${user.id})}" class="botao botaoPerigo"
+                            style="padding: 5px 10px; font-size: 0.8rem;"
+                            onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

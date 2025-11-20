@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Loja Virtual</title>
+    <link rel="stylesheet" th:href="@{/index.css}" />
+</head>
+
+<body>
+    <div class="containerPrincipal">
+        <div class="cartaoFormulario" style="max-width: 350px;">
+            <h1 class="tituloCartao">Login</h1>
+
+            <div th:if="${param.error}" style="color: #ef4444; text-align: center; margin-bottom: 15px;">
+                Usuário ou senha inválidos.
+            </div>
+
+            <div th:if="${param.logout}" style="color: #4ade80; text-align: center; margin-bottom: 15px;">
+                Você saiu do sistema.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="grupoFormulario">
+                    <label>E-mail:</label>
+                    <input type="text" name="username" placeholder="seu@email.com" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <label>Senha:</label>
+                    <input type="password" name="password" placeholder="Sua senha" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <button type="submit" class="botaoAdicionar">Entrar</button>
+                </div>
+
+                <div style="text-align: center; margin-top: 15px;">
+                    <a th:href="@{/usuarios/novo}" style="color: #3b82f6;">Criar conta</a> |
+                    <a th:href="@{/lista}" style="color: #94a3b8;">Voltar para Loja</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

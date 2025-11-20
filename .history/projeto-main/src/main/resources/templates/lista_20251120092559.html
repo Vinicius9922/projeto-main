@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabela Produtos</title>
+    <link rel="stylesheet" th:href="@{/lista.css}" />
+</head>
+
+<body>
+    <div class="containerPrincipal">
+        <h1><strong>CARRINHO DE COMPRAS</strong></h1>
+
+        <div>
+            <a class="botao botaoPrimario" th:href="@{/formulario}">Adicionar Produto</a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(produtos)}">
+            <h2 id="mensagemVoid"><strong>Seu carrinho está vazio!</strong></h2>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(produtos)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th><strong>ID</strong></th>
+                        <th><strong>NOME</strong></th>
+                        <th><strong>PREÇO</strong></th>
+                        <th><strong>QUANTIDADE</strong></th>
+                        <th><strong>REMOVER</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="produto : ${produtos}">
+                        <td th:text="${produto.id}"></td>
+                        <td th:text="${produto.nome}"></td>
+                        <td> R$ <span th:text="${#numbers.formatDecimal(produto.preco, 1, 2, 'COMMA')}"></span></td>
+                        <td>
+
+                            <div id="conteinerBotoes">
+                                <form th:action="@{/adicionar}" th:method="post">
+                                    <input type="hidden" name="id" th:value="${produto.id}" />
+                                    <button type="submit">+</button>
+                                </form>
+
+                                <span th:text="${produto.quantidade}"></span>
+
+                                <form th:action="@{/diminuir}" th:method="post">
+                                    <input type="hidden" name="id" th:value="${produto.id}" />
+                                    <button type="submit">-</button>
+                                </form>
+                            </div>
+
+                        </td>
+                        <td>
+                            <form th:action="@{/remover}" th:method="post">
+                                <input type="hidden" name="id" th:value="${produto.id}" />
+                                <button type="submit" class="botao botaoPerigo">Remover</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a th:href="@{/limpar}" class="botao botaoPerigo botaoLimpar"><strong>Limpar Carrinho</strong></a>
+        </div>
+
+    </div>
+</body>
+
+</html>

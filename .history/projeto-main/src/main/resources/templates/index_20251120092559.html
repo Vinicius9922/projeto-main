@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>Adicionar Produto</title>
+</head>
+
+<body>
+    <div class="containerPrincipal">
+        <div class="cartaoFormulario">
+            <h1 class="tituloCartao">ADICIONAR NOVO PRODUTO</h1>
+            <form action="/cadastrar" method="post">
+                
+                <div class="grupoFormulario">
+                    <label for="campoTitulo">Título:</label>
+                    <input type="text" name="nome" id="campoTitulo" placeholder="Título" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <label for="campoPreco">Preço:</label>
+                    <input type="text" name="preco" id="campoPreco" placeholder="R$" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <label for="campoQuantidade">Quantidade:</label>
+                    <input type="number" name="quantidade" id="campoQuantidade" min="0" placeholder="Unidades"
+                        required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <button type="submit" class="botaoAdicionar">Adicionar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

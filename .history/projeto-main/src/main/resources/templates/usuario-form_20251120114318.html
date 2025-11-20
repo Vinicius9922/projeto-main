@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Usuário</title>
+    <link rel="stylesheet" th:href="@{/index.css}" />
+</head>
+<body>
+    <div class="containerPrincipal">
+        <div class="cartaoFormulario">
+            <h1 class="tituloCartao">Cadastro de Usuário</h1>
+            
+            <form th:action="@{/usuarios/salvar}" th:object="${usuario}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="grupoFormulario">
+                    <label>Nome Completo:</label>
+                    <input type="text" th:field="*{nome}" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <label>E-mail:</label>
+                    <input type="email" th:field="*{email}" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <label>Senha:</label>
+                    <input type="password" th:field="*{senha}" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <label>Tipo de Usuário:</label>
+                    <select th:field="*{papel}" style="width: 100%; padding: 12px; border-radius: 8px; background: #0f172a; color: white; border: 1px solid #334155;">
+                        <option value="USER">Cliente (Padrão)</option>
+                        <option value="ADMIN">Administrador</option>
+                    </select>
+                </div>
+
+                <div class="grupoFormulario">
+                    <button type="submit" class="botaoAdicionar">Salvar Usuário</button>
+                </div>
+                
+                <div style="text-align: center; margin-top: 15px;">
+                    <a th:href="@{/usuarios}" style="color: #3b82f6;">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

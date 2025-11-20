@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0f172a;
+    /* Fundo Slate 900 */
+    color: #e2e8f0;
+    /* Texto Slate 200 */
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 32px;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+#mensagemVoid {
+    padding-top: 24px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #94a3b8;
+    /* Slate 400 */
+}
+
+.containerPrincipal {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #1e293b;
+    /* Cartão Slate 800 */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid #334155;
+    /* Borda Slate 700 */
+}
+
+/* --- Botões --- */
+
+/* Estilo base para botões */
+.botao {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Botão Primário (Adicionar Produto) */
+.botaoPrimario {
+    background-color: #3b82f6;
+    /* Azul 500 */
+    color: #ffffff;
+}
+
+.botaoPrimario:hover {
+    background-color: #2563eb;
+    /* Azul 600 */
+    transform: translateY(-2px);
+}
+
+/* Botão de Perigo (Remover, Limpar) */
+.botaoPerigo {
+    background-color: #ef4444;
+    /* Vermelho 500 */
+    color: #ffffff;
+}
+
+.botaoPerigo:hover {
+    background-color: #dc2626;
+    /* Vermelho 600 */
+}
+
+.botaoLimpar {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+}
+
+/* --- Tabela --- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 24px;
+    border-radius: 8px;
+    /* Cantos arredondados */
+    overflow: hidden;
+    /* Garante que o radius funcione no header */
+    border: 1px solid #334155;
+    /* Borda Slate 700 */
+}
+
+table th,
+table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #334155;
+    /* Borda Slate 700 */
+}
+
+table th {
+    background-color: #3b82f6;
+    /* Azul 500 */
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+}
+
+table td {
+    background-color: #1e293b;
+    /* Slate 800 */
+    color: #e2e8f0;
+    /* Slate 200 */
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Remove a borda inferior da última linha */
+table tr:last-child td {
+    border-bottom: none;
+}
+
+/* --- Controles de Quantidade (+/-) --- */
+
+#conteinerBotoes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+#conteinerBotoes span {
+    font-weight: 600;
+    font-size: 1.1rem;
+    min-width: 25px;
+    /* Garante alinhamento */
+    text-align: center;
+}
+
+/* Botões de + e - */
+#conteinerBotoes button {
+    background-color: #334155;
+    /* Slate 700 */
+    color: #e2e8f0;
+    /* Slate 200 */
+    border: none;
+    border-radius: 50%;
+    /* Botões redondos */
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    line-height: 30px;
+    /* Alinha o + e - verticalmente */
+    padding: 0;
+}
+
+#conteinerBotoes button:hover {
+    background-color: #475569;
+    /* Slate 600 */
+}

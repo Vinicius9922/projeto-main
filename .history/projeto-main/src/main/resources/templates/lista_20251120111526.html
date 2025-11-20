@@ -1,0 +1,10 @@
+<td>
+    <a th:href="@{/detalhes/{id}(id=${produto.id})}" 
+       th:text="${produto.nome}"
+       style="color: #3b82f6; font-weight: bold; text-decoration: underline;">
+    </a>
+    <div style="font-size: 0.8rem; color: #94a3b8;" 
+         th:if="${produto.categoria != null}" 
+         th:text="${produto.categoria.nome}">
+    </div>
+</td>

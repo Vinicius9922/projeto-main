@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/index.css}" />
+    <title>Adicionar Produto</title>
+</head>
+
+<body>
+    <div class="containerPrincipal">
+        <div class="cartaoFormulario">
+            <h1 class="tituloCartao">NOVO PRODUTO</h1>
+            
+            <form action="/cadastrar" method="post" enctype="multipart/form-data">
+
+                <div class="grupoFormulario">
+                    <label for="campoTitulo">Título:</label>
+                    <input type="text" name="nome" id="campoTitulo" placeholder="Ex: Notebook Gamer" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <label for="campoPreco">Preço:</label>
+                    <input type="number" step="0.01" name="preco" id="campoPreco" placeholder="R$" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <label for="campoQuantidade">Quantidade:</label>
+                    <input type="number" name="quantidade" id="campoQuantidade" min="0" placeholder="Unidades" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <label for="campoArquivo">Imagem do Produto:</label>
+                    <input type="file" name="file" id="campoArquivo" accept="image/*" required />
+                </div>
+
+                <div class="grupoFormulario">
+                    <button type="submit" class="botaoAdicionar">Cadastrar Produto</button>
+                </div>
+            </form>
+            
+             <div style="text-align: center; margin-top: 15px;">
+                <a th:href="@{/lista}" style="color: #3b82f6;">Ver Loja</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

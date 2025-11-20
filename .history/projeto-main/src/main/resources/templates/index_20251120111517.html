@@ -1,0 +1,11 @@
+<div class="grupoFormulario">
+    <label for="campoCategoria">Categoria:</label>
+    <select name="categoriaId" id="campoCategoria" required 
+            style="width: 100%; padding: 12px; border-radius: 8px; background: #0f172a; color: white; border: 1px solid #334155;">
+        <option value="" disabled selected>Selecione uma categoria</option>
+        <option th:each="cat : ${categorias}" 
+                th:value="${cat.id}" 
+                th:text="${cat.nome}">
+        </option>
+    </select>
+</div>
