@@ -11,6 +11,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // [cite: 23] Permite exibir as imagens salvas automaticamente
         Path uploadDir = Paths.get("./imagens-upload");
         String uploadPath = uploadDir.toFile().getAbsolutePath();
 

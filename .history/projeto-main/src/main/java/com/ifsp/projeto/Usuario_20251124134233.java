@@ -14,6 +14,7 @@ public class Usuario extends EntidadeBase{
     private String senha;
 
     private String papel; 
+
    
     public Usuario() {
     }

@@ -19,6 +19,7 @@ public class UsuarioController {
         return "login.html";
     }
 
+    // 1. Listar Usuários
     @GetMapping("/usuarios")
     public String listarUsuarios(Model model) {
         model.addAttribute("listaUsuarios", usuarioRepository.findAll());
@@ -28,7 +29,7 @@ public class UsuarioController {
     @GetMapping("/usuarios/novo")
     public String novoUsuario(Model model) {
         model.addAttribute("usuario", new Usuario());
-        return "usuario-form.html"; 
+        return "usuario-form.html"; // Vamos criar este arquivo
     }
    
     @PostMapping("/usuarios/salvar")

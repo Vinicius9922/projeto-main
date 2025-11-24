@@ -10,13 +10,13 @@ import jakarta.validation.constraints.NotBlank;
 public class Categoria extends EntidadeBase{
 
 
-    @NotBlank(message = "O nome da categoria é obrigatório") 
+    @NotBlank(message = "O nome da categoria é obrigatório") // Validação 1
     private String nome;
 
     @OneToMany(mappedBy = "categoria")
     private List<Produtos> produtos;
 
-    
+    // Construtores, Getters e Setters
     public Categoria() {
     }      
 

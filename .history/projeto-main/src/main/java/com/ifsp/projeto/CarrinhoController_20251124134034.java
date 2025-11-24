@@ -78,11 +78,15 @@ public class CarrinhoController {
             return "index.html";
         }
 
+        // Se passou na validação, continua o fluxo normal...
+
+        // Associa a categoria
         Optional<Categoria> catOpt = categoriaRepository.findById(categoriaId);
         if (catOpt.isPresent()) {
             produtos.setCategoria(catOpt.get());
         }
 
+        // Lógica de Upload de Imagem
         try {
             if (!arquivo.isEmpty()) {
                 byte[] bytes = arquivo.getBytes();
@@ -143,11 +147,15 @@ public class CarrinhoController {
                                  RedirectAttributes attributes) {
         
         try {
+            // Chamamos um método que pode dar erro (vamos criar ele abaixo)
             processarCompra(id, quantidadeCompra);
-            attributes.addFlashAttribute("sucesso", "Compra realizada com sucesso!");            
-        } catch (EstoqueInsuficienteException e) {            
+            attributes.addFlashAttribute("sucesso", "Compra realizada com sucesso!");
+            
+        } catch (EstoqueInsuficienteException e) {
+            // Capturamos NOSSA exceção de POO
             attributes.addFlashAttribute("erro", e.getMessage());
-        } catch (Exception e) {            
+        } catch (Exception e) {
+            // Captura genérica
             attributes.addFlashAttribute("erro", "Erro inesperado na compra.");
         }
         
@@ -163,7 +171,7 @@ public class CarrinhoController {
                 throw new EstoqueInsuficienteException("Quantidade inválida.");
             }
             if (qtd > produto.getQuantidade()) {
-                
+                // LANÇANDO A EXCEÇÃO
                 throw new EstoqueInsuficienteException("Estoque insuficiente! Restam apenas " + produto.getQuantidade());
             }
 

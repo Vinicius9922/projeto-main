@@ -16,7 +16,7 @@ public class Categoria extends EntidadeBase{
     @OneToMany(mappedBy = "categoria")
     private List<Produtos> produtos;
 
-    
+    // Construtores, Getters e Setters
     public Categoria() {
     }      
 

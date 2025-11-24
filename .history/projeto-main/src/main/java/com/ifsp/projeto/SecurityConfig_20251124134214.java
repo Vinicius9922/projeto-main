@@ -16,12 +16,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        
+                        // PÁGINAS PÚBLICAS
+                        // Mudamos "/css/**" para "/*.css" para pegar seus arquivos na raiz
                         .requestMatchers("/", "/lista", "/detalhes/**", "/login", "/*.css", "/imagens-upload/**")
                         .permitAll()
                         .requestMatchers("/usuarios/novo", "/usuarios/salvar").permitAll()
 
-                       
+                        // PÁGINAS RESTRITAS
                         .requestMatchers("/formulario", "/cadastrar", "/editar/**", "/remover", "/usuarios/**",
                                 "/fornecedores/**", "/categorias/**")
                         .hasRole("ADMIN")

@@ -21,7 +21,7 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers("/usuarios/novo", "/usuarios/salvar").permitAll()
 
-                       
+                        // PÁGINAS RESTRITAS
                         .requestMatchers("/formulario", "/cadastrar", "/editar/**", "/remover", "/usuarios/**",
                                 "/fornecedores/**", "/categorias/**")
                         .hasRole("ADMIN")

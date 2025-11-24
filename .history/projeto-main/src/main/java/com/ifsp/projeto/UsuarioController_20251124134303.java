@@ -19,6 +19,7 @@ public class UsuarioController {
         return "login.html";
     }
 
+    // 1. Listar Usuários
     @GetMapping("/usuarios")
     public String listarUsuarios(Model model) {
         model.addAttribute("listaUsuarios", usuarioRepository.findAll());

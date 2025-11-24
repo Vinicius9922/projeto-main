@@ -5,5 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    // O Spring usa esse método para buscar no login.
+    // Se o nome estiver errado, o login falha.
     Usuario findByEmail(String email);
 }

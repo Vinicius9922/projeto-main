@@ -144,10 +144,13 @@ public class CarrinhoController {
         
         try {
             processarCompra(id, quantidadeCompra);
-            attributes.addFlashAttribute("sucesso", "Compra realizada com sucesso!");            
-        } catch (EstoqueInsuficienteException e) {            
+            attributes.addFlashAttribute("sucesso", "Compra realizada com sucesso!");
+            
+        } catch (EstoqueInsuficienteException e) {
+            
             attributes.addFlashAttribute("erro", e.getMessage());
-        } catch (Exception e) {            
+        } catch (Exception e) {
+            
             attributes.addFlashAttribute("erro", "Erro inesperado na compra.");
         }
         
