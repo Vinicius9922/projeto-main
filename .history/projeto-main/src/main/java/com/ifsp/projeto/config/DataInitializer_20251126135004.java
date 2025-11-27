@@ -1,10 +1,13 @@
-package com.ifsp.projeto;
+package com.ifsp.projeto.service;
 
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+
+import com.ifsp.projeto.model.Categoria;
+import com.ifsp.projeto.repository.CategoriaRepository;
 
 @Configuration
 public class DataInitializer implements CommandLineRunner {
