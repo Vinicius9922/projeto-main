@@ -1,7 +1,7 @@
 package com.ifsp.projeto.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn; 
+import jakarta.persistence.JoinColumn; // Para validações
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;

@@ -1,7 +1,7 @@
 package com.ifsp.projeto.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn; 
+import jakarta.persistence.JoinColumn; // Para validações
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -13,10 +13,10 @@ import jakarta.validation.constraints.Positive;
 public class Produtos extends EntidadeBase{ 
 
    
-    @NotBlank(message = "O nome é obrigatório") 
+    @NotBlank(message = "O nome é obrigatório") // Validação 2
     private String nome;
 
-    @Positive(message = "O preço deve ser maior que zero") 
+    @Positive(message = "O preço deve ser maior que zero") // Validação 3
     private double preco;
 
     @Min(value = 0, message = "A quantidade não pode ser negativa")
